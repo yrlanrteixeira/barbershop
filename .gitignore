@@ -1,29 +1,40 @@
-# For PCBs designed using KiCad: https://www.kicad.org/
-# Format documentation: https://kicad.org/help/file-formats/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Temporary files
-*.000
-*.bak
-*.bck
-*.kicad_pcb-bak
-*.kicad_sch-bak
-*-backups
-*.kicad_prl
-*.sch-bak
-*~
-_autosave-*
-*.tmp
-*-save.pro
-*-save.kicad_pcb
-fp-info-cache
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
-# Netlist files (exported from Eeschema)
-*.net
+# testing
+/coverage
 
-# Autorouter files (exported from Pcbnew)
-*.dsn
-*.ses
+# next.js
+/.next/
+/out/
 
-# Exported BOM files
-*.xml
-*.csv
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+.dockerignore
+.postgres-data
+.env
