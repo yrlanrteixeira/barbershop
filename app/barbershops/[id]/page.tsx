@@ -1,53 +1,48 @@
-import { db } from "@/app/lib/prisma";
-import BarbershopInfo from "./_components/babershop-info";
-import ServiceItem from "./_components/service-item";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth"
+import { Service } from "@prisma/client"
+import BarbershopInfo from "./_components/barbershop-info"
+import ServiceItem from "./_components/service-item"
+import { authOptions } from "@/app/_lib/auth"
+import { db } from "@/app/_lib/prisma"
 
 interface BarbershopDetailsPageProps {
   params: {
-    id?: string;
-  };
+    id?: string
+  }
 }
 
-const BarbershopDetailsPage = async ({
-  params,
-}: BarbershopDetailsPageProps) => {
-  const session = await getServerSession(authOptions);
+const BarbershopDetailsPage = async ({ params }: BarbershopDetailsPageProps) => {
+  const session = await getServerSession(authOptions)
 
   if (!params.id) {
-    //TODO redirect to home page
-    return null;
+    return null
   }
 
   const barbershop = await db.barbershop.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: {
-      services: true,
-    },
-  });
+    where: { id: params.id },
+    include: { services: true },
+  })
 
   if (!barbershop) {
-    //TODO redirect to home page
-    return null;
+    return null
   }
 
   return (
     <div>
       <BarbershopInfo barbershop={barbershop} />
-      <div className="px-5 py-6 flex flex-col gap-4">
-        {barbershop.services.map((service) => (
+
+      <div className="flex flex-col gap-4 px-5 py-6">
+        {barbershop.services.map((service: Service) => (
           <ServiceItem
             key={service.id}
+            barbershop={barbershop}
             service={service}
             isAuthenticated={!!session?.user}
           />
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BarbershopDetailsPage;
+export default BarbershopDetailsPage
